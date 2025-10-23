@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>To-Do App</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+
+        .container {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        #taskList {
+            list-style: none;
+            padding: 0;
+        }
+
+        #taskList li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn {
+            margin-left: 10px;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .edit {
+            color: green;
+        }
+
+        .delete {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>My To-Do List</h2>
+        <input type="text" id="newTask" placeholder="Add a new task...">
+        <button onclick="addTask()">Add</button>
+
+        <ul id="taskList"></ul>
+        </ul>
+    </div>
+
+    <script>
+        function addTask() {
+            const input = document.getElementById("newTask");
+            const task = input.value.trim();
+
+            if (task === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            const li = document.createElement("li");
+            li.textContent = task;
+
+            // tombol edit
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.classList.add("btn", "edit");
+            editBtn.onclick = function () {
+                editTask(li);
+            };
+
+            // tombol hapus
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "Delete";
+            delBtn.classList.add("btn", "delete");
+            delBtn.onclick = function () {
+                deleteTask(li);
+            };
+
+            li.appendChild(editBtn);
+            li.appendChild(delBtn);
+
+            document.getElementById("taskList").appendChild(li);
+            input.value = "";
+        }
+
+        function deleteTask(element) {
+            element.remove();
+        }
+
+        function editTask(element) {
+            const newText = prompt("Edit your task:", element.firstChild.textContent);
+            if (newText !== null && newText.trim() !== "") {
+                element.firstChild.textContent = newText.trim();
+            }
+        }
+    </script>
+</body>
+
+</html>
